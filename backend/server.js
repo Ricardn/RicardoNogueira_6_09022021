@@ -1,6 +1,8 @@
+//create http server by calling the package http and require ./app file
 const http = require("http");
 const app = require("./app");
 
+//return a valid port whether supplied as a number or as a string
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
 
@@ -15,6 +17,7 @@ const normalizePort = (val) => {
 const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
+//search for various errors, handles them and save them on the server
 const errorHandler = (error) => {
   if (error.syscall !== "listen") {
     throw error;
@@ -38,6 +41,7 @@ const errorHandler = (error) => {
 
 const server = http.createServer(app);
 
+//event listener logging the port or named pipe from the server running in the console
 server.on("error", errorHandler);
 server.on("listening", () => {
   const address = server.address();

@@ -1,18 +1,21 @@
 const Sauce = require("../models/sauce");
 const fs = require("fs");
 
+//get All Sauces and display them, if error return the error
 exports.getAllSauces = (req, res, next) => {
   Sauce.find()
     .then((sauces) => res.status(200).json(sauces))
     .catch((error) => res.status(404).json({ error }));
 };
 
+//get one Sauce by their _ID then return the sauce, if error return error
 exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => res.status(200).json(sauce))
     .catch((error) => res.status(404).json({ error }));
 };
 
+//create a new sauce and update with .save() the DataBase  
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
   delete sauceObject._id;
@@ -32,6 +35,7 @@ exports.createSauce = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
+//Update the Sauce content
 exports.updateSauce = (req, res, next) => {
   const sauceObject = req.file
     ? {
@@ -50,6 +54,7 @@ exports.updateSauce = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
+//Remove the Sauce
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => {
@@ -68,6 +73,7 @@ exports.likeDislikeSauce = (req, res, next) => {
   let userId = req.body.userId;
   let sauceId = req.params.id;
 
+  //If liked add +1 to likes
   switch (like) {
     case 1:
       Sauce.updateOne(
@@ -79,6 +85,7 @@ exports.likeDislikeSauce = (req, res, next) => {
 
       break;
 
+    //If the user click in already liked/unliked this will update and remove -1 to set to '0' neutral
     case 0:
       Sauce.findOne({ _id: sauceId })
         .then((sauce) => {
@@ -102,6 +109,7 @@ exports.likeDislikeSauce = (req, res, next) => {
         .catch((error) => res.status(404).json({ error }));
       break;
 
+    //If unliked add +1 to dislikes
     case -1:
       Sauce.updateOne(
         { _id: sauceId },

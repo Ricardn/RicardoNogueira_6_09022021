@@ -1,3 +1,4 @@
+// Remove all Trim(white space) and check if the input have at least 3 characteres, if not set error, if yes the costumer can click and input 
 module.exports = (req, res, next) => {
   if (JSON.parse(req.body.sauce !== undefined)) {
     const sauce = JSON.parse(req.body.sauce);

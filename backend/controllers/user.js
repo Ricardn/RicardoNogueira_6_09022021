@@ -2,6 +2,8 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+//signup function
+//check if email already exist, if yes send error, if no create a new User
 exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)
@@ -18,6 +20,10 @@ exports.signup = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+
+//login function
+//check if email match + check if password hashed match
+//if yes Login, if not set error 
 exports.login = (req, res, next) => {
     console.log("email", req.body.email);
     console.log("password", req.body.password);
@@ -34,7 +40,7 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
-            token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
+            token: jwt.sign({ userId: user._id }, process.env.token, {
               expiresIn: "24h",
             }),
           });

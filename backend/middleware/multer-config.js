@@ -1,11 +1,13 @@
 const multer = require('multer');
 
+//set type of files
 const MIME_TYPES = {
   "image/jpg": "jpg",
   "image/jpeg": "jpg",
   "image/png": "png",
 };
 
+//storage an image and Add an extention name Mime_Type[file.mimetype] + Datenow + extension
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, "images");
