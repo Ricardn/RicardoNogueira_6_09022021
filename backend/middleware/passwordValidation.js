@@ -1,12 +1,15 @@
-//Import passwordSchema model
-const passwordSchema = require('../models/password');
+//Import passwordSchema model.
+const validator = require("../helpers/password");
 
-//If the password dont match with the model return status 400 error
-//Else the user acount will be created
+//Check if the the password match with the model.
 module.exports = (req, res, next) => {
-    if(!passwordSchema.validate(req.body.password)) {
-        res.status(400).json({ error: "Veuillez choisir un mot de passe plus fort !"});
+    if (!validator.validate(req.body.password)) {
+      res
+        //If error, return error and status 400 (Bad Request).
+        .status(400)
+        .json({ error: "Veuillez choisir un mot de passe plus fort !" });
     } else {
-        next();
+      //Else the user acount will be created.
+      next();
     }
 }
