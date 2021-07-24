@@ -1,5 +1,7 @@
+//Import the Object Document Mapping(ODM) mongoose.
 const mongoose = require('mongoose');
 
+//Create the Sauce Schemma with mongoose.Schema to define the Schema used by MongoDB.
 const sauceSchema = mongoose.Schema({
   userId: { type: String, required: true },
   name: { type: String, required: true },
@@ -14,4 +16,5 @@ const sauceSchema = mongoose.Schema({
   usersDisliked: { type: [String], required: true },
 });
 
+//Export the model sauceSchema of Sauce.
 module.exports = mongoose.model('Sauce', sauceSchema)
