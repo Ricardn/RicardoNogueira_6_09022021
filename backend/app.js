@@ -16,6 +16,9 @@ const helmet = require('helmet');
 //Import the Cors package for providing a connect/express middleware.
 const cors = require("cors");
 
+//Import the express-rate-limit
+const rateLimit = require('./middleware/ratelimit');
+
 
 //Call User and Sauces routes.
 const userRoutes = require("./routes/user");
@@ -32,6 +35,8 @@ mongoose
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 const app = express();
+
+app.use(rateLimit);
 
 app.use(helmet());
 
